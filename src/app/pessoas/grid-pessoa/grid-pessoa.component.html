@@ -1,0 +1,23 @@
+<p-dataTable [value]="pessoas" [paginator]="true" [rows]="itensPorPagina"
+
+[responsive]="true" [lazy]="true" [totalRecords]="totalRegistro" #table
+  [rowsPerPageOptions]="[5,10,20]" (onLazyLoad)="pesquisaPaginada($event)">
+  <p-column field="nome" header="Nome"></p-column>
+  <p-column field="endereco.cidade" header="Cidade"></p-column>
+  <p-column field="endereco.estado" header="Estado"></p-column>
+  <p-column field="ativo" header="Status">
+    <ng-template let-pes="rowData" pTemplate="body">
+      <a href="javascript:;" [pTooltip]="pes.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top">
+      {{ pes.ativo ? 'Ativo' : 'Inativo' }}
+    </a>
+    </ng-template>
+  </p-column>
+  <p-column styleClass="col-acoes">
+    <ng-template let-pessoa="rowData" pTemplate="body">
+      <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+      <button pButton icon="fa-trash"
+        (click)="excluirEmit(pessoa)"
+        pTooltip="Excluir" tooltipPosition="top"></button>
+    </ng-template>
+  </p-column>
+</p-dataTable>

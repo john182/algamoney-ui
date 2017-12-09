@@ -1,0 +1,38 @@
+<p-dataTable [value]="lancamentos" [paginator]="true" [rows]="itensPorPagina" [responsive]="true"
+             [lazy]="true" [totalRecords]="totalRegistro"
+             [rowsPerPageOptions]="[5,10,20]"
+             #tabela
+             (onLazyLoad)="pesquisaPaginada($event)">
+
+  <p-column field="pessoa" header="Pessoa"></p-column>
+  <p-column field="descricao" header="Descrição"></p-column>
+
+  <p-column field="dataVencimento" header="Vencimento" styleClass="col-data">
+    <ng-template let-lanc="rowData" pTemplate="body">
+      <span>{{lanc.dataVencimento | date:'dd/MM/yyyy'}}</span>
+    </ng-template>
+  </p-column>
+
+  <p-column field="dataPagamento" header="Pagamento" styleClass="col-data">
+    <ng-template let-lanc="rowData" pTemplate="body">
+      <span>{{lanc.dataPagamento | date:'dd/MM/yyyy'}}</span>
+    </ng-template>
+  </p-column>
+
+  <p-column field="valor" header="Valor" styleClass="col-valor">
+    <ng-template let-lanc="rowData" pTemplate="body">
+      <span [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'">{{lanc.valor | number}}</span>
+    </ng-template>
+  </p-column>
+
+  <p-column styleClass="col-acoes">
+    <ng-template pTemplate="body" let-lanc="rowData">
+      <a pButton icon="fa-pencil"
+                [routerLink]="['/lancamentos',lanc.codigo]"
+                pTooltip="Editar" tooltipPosition="top"></a>
+      <button pButton icon="fa-trash"
+              (click)="excluirEmit(lanc)"
+              pTooltip="Excluir" tooltipPosition="top" [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+    </ng-template>
+  </p-column>
+</p-dataTable>
