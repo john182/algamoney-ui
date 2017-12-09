@@ -1,0 +1,8 @@
+<div [class]="tamanhoColuna" [class.has-error]="hasError()">
+  <label class="control-label">{{label}}</label>
+  <input pInputText type="text"  class="form-control" [attr.maxlength]="tamanhoMaximo" [required]="requerido">
+  <span class="help-block m-b-none" *ngIf="hasError()">
+    <i class="fa fa-remove"></i>
+    {{label}} Obrigatório
+  </span>
+</div>

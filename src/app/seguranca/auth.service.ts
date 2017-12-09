@@ -65,15 +65,18 @@ export class AuthService {
     headers.append('Authorization', `Basic ${senhaClient}`);
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const body = "grant_type=refresh_token";
+
     return this.http.post(this.url, body, { headers, withCredentials: true })
       .toPromise()
       .then(response => {
-        console.log(response.json());
         this.armazenarToken(response.json().access_token);
         console.log('Novo access token criado!');
       })
       .catch(response => {
         console.log('Erro ao renovar Token ', response);
+        if (response.status === 401) {
+          return Promise.reject('Usuário ou senha inválida!')
+        }
         return Promise.resolve(null);
       });
   }

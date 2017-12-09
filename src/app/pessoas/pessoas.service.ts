@@ -1,3 +1,4 @@
+import { Pessoa } from './../core/models';
 import { AuthHttp } from 'angular2-jwt';
 import { ErrorHandlerService } from './../core/error-handler.service';
 import { Injectable } from '@angular/core';
@@ -23,6 +24,12 @@ export class PessoasService {
 
   constructor(private http: AuthHttp) {
 
+  }
+
+  buscarPorCodigo(codigo: number): Promise<Pessoa> {
+    return this.http.get(`${this.pessoasUrl}/${codigo}`)
+      .toPromise()
+      .then(response => response.json() as Pessoa);
   }
 
 
@@ -66,6 +73,19 @@ export class PessoasService {
 
 
 
+  }
+
+  adicionar(pessoa: Pessoa): Promise<Pessoa> {
+    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa))
+      .toPromise()
+      .then(response => response.json());
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`,
+        JSON.stringify(pessoa))
+      .toPromise()
+      .then(response => response.json() as Pessoa);
   }
 
 

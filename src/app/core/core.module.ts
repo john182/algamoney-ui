@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http/';
 import { AuthGuard } from './../seguranca/auth.guard';
 
 import {JwtHelper} from 'angular2-jwt';
@@ -21,11 +22,13 @@ import { ConfirmationService } from 'primeng/components/common/api';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 
+import { Title } from '@angular/platform-browser';
+
 
 @NgModule({
   imports: [
     CommonModule,
-
+    HttpModule,
     RouterModule,
     ToastyModule.forRoot(),
     ConfirmDialogModule,
@@ -40,6 +43,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     CategoriaService,
     AuthService,
     JwtHelper,
+    Title,
     {provide:LOCALE_ID,useValue:'pt-BR'}
   ]
 })
